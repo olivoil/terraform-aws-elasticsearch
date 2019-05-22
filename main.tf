@@ -74,7 +74,6 @@ resource "aws_iam_role" "elasticsearch_user" {
   name               = "${module.user_label.id}"
   assume_role_policy = "${data.aws_iam_policy_document.assume_role.json}"
   description        = "IAM Role to assume to access the Elasticsearch ${module.label.id} cluster"
-  tags               = "${module.user_label.tags}"
 }
 
 data "aws_iam_policy_document" "assume_role" {
@@ -125,10 +124,6 @@ resource "aws_elasticsearch_domain" "default" {
     dedicated_master_count   = "${var.dedicated_master_count}"
     dedicated_master_type    = "${var.dedicated_master_type}"
     zone_awareness_enabled   = "${var.zone_awareness_enabled}"
-  }
-
-  node_to_node_encryption {
-    enabled = "${var.node_to_node_encryption_enabled}"
   }
 
   vpc_options {
